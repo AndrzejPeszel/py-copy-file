@@ -13,7 +13,11 @@ def copy_file(command: str) -> None:
     if source_filename == destination_filename:
         return
 
-    # Copy file content from source to destination
-    with open(source_filename, "r") as source_file, \
-         open(destination_filename, "w") as destination_file:
-        destination_file.write(source_file.read())
+    try:
+        # Copy file content from source to destination
+        with open(source_filename, "r") as source_file, \
+             open(destination_filename, "w") as destination_file:
+            destination_file.write(source_file.read())
+    except FileNotFoundError:
+        # Gracefully ignore if source file doesn't exist
+        return
